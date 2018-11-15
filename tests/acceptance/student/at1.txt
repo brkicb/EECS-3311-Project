@@ -1,0 +1,49 @@
+new_tracker(-1.0, 2.0)
+undo
+redo
+new_tracker(-2.0, 2.0)
+new_tracker(-3.0, 2.0)
+new_tracker(1.0, -2.0)
+new_tracker(1.0, 4.0)
+undo
+undo
+undo
+undo
+undo
+redo
+redo
+new_phase("pid1", "assay", 5, <<metal, liquid>>)
+undo
+new_tracker(20.0, 14.0)
+new_phase("pid1", "assay", 5, <<glass, metal, plastic>>)
+new_phase("$pid2", "compacting", 5, <<glass, metal, plastic, liquid>>)
+new_phase("pid2", "$compacting", 4, <<glass, metal, plastic, liquid>>)
+new_phase("pid2", "compacting", 5, <<glass, metal, plastic, liquid>>)
+new_container("cid1", [plastic, 2.0], "pid1")
+new_container("cid2", [plastic, 1.0], "pid1")
+new_container("cid3", [plastic, 1.5], "pid1")
+new_container("cid4", [plastic, 1.0], "pid1")
+undo
+undo
+redo
+redo
+move_container("cid1", "pid1", "pid2")
+move_container("cid2", "pid1", "pid2")
+move_container("cid3", "pid1", "pid2")
+undo
+undo
+undo
+undo
+undo
+undo
+undo
+undo
+redo
+redo
+redo
+redo
+redo
+redo
+redo
+redo
+

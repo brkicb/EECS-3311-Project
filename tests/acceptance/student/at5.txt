@@ -1,0 +1,44 @@
+new_tracker(20.0, 14.0)
+new_phase("pid1", "assay", 3, <<glass, metal, plastic>>)
+new_phase("$pid2", "compacting", 4, <<glass, metal, plastic, liquid>>)
+new_phase("pid2", "$compacting", 4, <<glass, metal, plastic, liquid>>)
+new_phase("pid2", "compacting", 4, <<glass, metal, plastic, liquid>>)
+new_phase("pid3", "moving", 4, <<liquid>>)
+new_container("cid1", [plastic, 2.0], "pid1")
+new_container("cid2", [plastic, 1.0], "pid1")
+-- error e14 will occur
+new_container("cid3", [plastic, 15.0], "pid1")
+new_container("cid3", [plastic, 1.5], "pid1")
+-- error e10 will occur
+new_container("cid3", [plastic, 1.5], "pid1")
+-- error e13 will occur
+new_container("cid4", [liquid, 1.0], "pid1")
+-- error e5 will occur
+new_container("$cid4", [liquid, 1.0], "pid1")
+new_container("cid5", [plastic, 13.0], "pid1")
+-- error e18 will occur
+new_container("cid6", [plastic, -6.0], "pid1")
+-- error e12 will occur
+new_container("cid6", [plastic, 13.0], "pid1")
+-- error e1 will occur
+new_tracker(10.0, 6.0)
+-- error e11 will occur
+new_container("cid7", [plastic, 1.5], "pid1")
+move_container("cid1", "pid1", "pid2")
+move_container("cid2", "pid1", "pid2")
+-- error e16 will occur
+move_container("cid3", "pid1", "pid1")
+-- error e15 will occur
+move_container("cid94", "pid1", "pid2")
+-- error e17 will occur
+move_container("cid3", "pid2", "pid1")
+-- error e13 will occur
+move_container("cid3", "pid1", "pid3")
+move_container("cid3", "pid1", "pid2")
+remove_phase("pid2")
+remove_phase("pid3")
+remove_container("cid1")
+remove_container("cid2")
+remove_container("cid3")
+remove_container("cid4")
+

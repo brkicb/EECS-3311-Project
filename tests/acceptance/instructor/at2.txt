@@ -1,0 +1,32 @@
+-- at2.txt 
+-- Error messages for new tracker and phases
+-- comments may occur at the beginning or in the middle of a line
+-- type CONTAINER = TUPLE[material: MATERIAL; radioactivity: VALUE]
+
+-- phases sorted by pid
+-- containers sorted by cid
+
+-- create a new tracker
+-- max. radiation in a phase is 50.0
+-- max. radiation in a container is 10.0
+new_tracker(39.0, 10.0)
+
+-- error cases for new tracker
+new_tracker(-1, 10.0)  -- e2
+new_tracker(50.0, -1)  -- e3
+new_tracker(1.0, 1.1)  -- e4
+new_tracker(0, 1) -- error case
+
+-- add phases pid3 and pid2
+new_phase("pid3", "compacting", 2, <<glass, metal, plastic>>)
+new_phase("pid2", "assay", 3, <<glass, metal, plastic, liquid>>)
+
+-- error checking on adding new phases
+new_phase("", "assay", 3, <<glass, metal, plastic, liquid>>) -- e5
+new_phase("pid2", "assay", 3, <<glass, metal, plastic, liquid>>) -- e6
+new_phase("pid9", "", 3, <<glass, metal, plastic, liquid>>) -- e5
+new_phase("pid9", "junk", 0, <<glass, metal, plastic, liquid>>) -- e7
+new_phase("pid9", "junk", 1, <<>>) -- e8
+
+new_phase("pid1", "unpacking", 4, <<glass, metal, plastic, liquid>>)
+new_phase("pid4", "storage", 7, <<glass, metal, plastic, liquid>>)

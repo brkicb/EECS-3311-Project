@@ -1,0 +1,32 @@
+new_tracker(-1.0, 2.0)
+undo
+redo
+new_tracker(10.0, 2.0)
+new_phase("pid", "assay", 4, <<metal>>)
+new_tracker(-1.0, 2.0)
+undo
+undo
+redo
+redo
+new_phase("pid3", "assay", 4, <<glass, metal>>)
+-- error will occur
+new_container("cid5", [liquid, 2.0], "pid3")
+undo
+redo
+new_container("cid5", [glass, 2.0], "pid3")
+new_container("cid6", [glass, 2.0], "pid3")
+new_container("cid7", [glass, 2.0], "pid3")
+new_phase("pid4", "compacting", 4, <<glass, metal, plastic>>)
+undo
+redo
+-- error will occur
+new_phase("pid3", "compacting", 1, <<glass, metal, plastic>>)
+new_phase("pid4", "compacting", 2, <<glass, metal, plastic>>)
+undo
+undo
+redo
+redo
+move_container("cid5", "pid3", "pid4")
+move_container("cid6", "pid3", "pid4")
+-- error will occur
+move_container("cid7", "pid3", "pid4")
